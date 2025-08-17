@@ -2,15 +2,21 @@ const { Client, GatewayIntentBits, Partials, ActionRowBuilder, ButtonBuilder, Bu
 const fetch = require('node-fetch');
 
 const client = new Client({ 
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.DirectMessages],
+    intents: [
+        GatewayIntentBits.Guilds, 
+        GatewayIntentBits.GuildMessages, 
+        GatewayIntentBits.MessageContent, 
+        GatewayIntentBits.DirectMessages
+    ],
     partials: [Partials.Channel] 
 });
 
-const GOOGLE_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; // Replace with your Web App URL
-const BOT_TOKEN = "YOUR_DISCORD_BOT_TOKEN"; // Replace with your bot token
+// Use environment variables instead of hardcoding
+const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
+const BOT_TOKEN = process.env.DISCORD_TOKEN;
 
 client.once('ready', () => {
-    console.log(`Logged in as ${client.user.tag}`);
+    console.log(`✅ Logged in as ${client.user.tag}`);
 });
 
 // Handle !start command
@@ -45,7 +51,7 @@ client.on('messageCreate', async message => {
             await dm.channel.send({ content: "All set! Click the button when you arrive at the office.", components: [row] });
 
         } catch (err) {
-            console.log(err);
+            console.error(err);
             message.author.send("Something went wrong. Please try again.");
         }
     }
@@ -66,7 +72,7 @@ client.on('interactionCreate', async interaction => {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        await interaction.followUp("Visit logged! Thank you.");
+        await interaction.followUp("✅ Visit logged! Thank you.");
     }
 });
 
