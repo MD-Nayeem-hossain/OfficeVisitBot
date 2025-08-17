@@ -12,5 +12,8 @@
   "dependencies": {
     "discord.js": "^14.21.0",
     "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
